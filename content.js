@@ -12,7 +12,7 @@ window.SITE_CONTENT = {
     eyebrow: "WELCOME TO YURI ISSA WEBSITE",
     greeting: "HELLO, I'M",
     name: "ALI ISSA",
-    description: "A personal world of ideas ... Imagination Without Limits.",
+    description: "A personal world of ideas ...<br>Imagination Without Limits.",
     button: "DISCOVER MORE"
   },
   explore: { title: "EXPLORE MY WORLD", viewAll: "VIEW ALL" },
@@ -91,7 +91,7 @@ window.SITE_CONTENT = {
   text('.eyebrow', c.hero.eyebrow);
   const h1 = one('.hero h1');
   if (h1) { h1.firstChild.textContent = c.hero.greeting + ' '; text('.hero h1 span', c.hero.name); }
-  text('.hero-copy p', c.hero.description);
+  html('.hero-copy p', c.hero.description);
   label('.hero-copy .glow-btn', c.hero.button);
   text('.section-heading h2', c.explore.title);
   label('.section-heading .view-all', c.explore.viewAll);
