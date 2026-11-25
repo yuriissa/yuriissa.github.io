@@ -1,4 +1,3 @@
-
 /* Yuri Issa — central website content file
    Edit the values below to change the website's visible text and links.
    Keep the CSS and HTML unchanged unless you want to alter the design. */
@@ -13,7 +12,7 @@ window.SITE_CONTENT = {
     eyebrow: "WELCOME TO YURI ISSA WEBSITE",
     greeting: "HELLO, I'M",
     name: "ALI ISSA",
-    description: "A personal world of ideas - Imagination Without Limits.",
+    description: "A personal world of ideas ... Imagination Without Limits.",
     button: "DISCOVER MORE"
   },
   explore: { title: "EXPLORE MY WORLD", viewAll: "VIEW ALL" },
