@@ -9,7 +9,7 @@ window.SITE_CONTENT = {
   navigation: ["Home", "About", "Projects", "Articles", "Gallery", "Contact", "EN"],
   navigationTargets: ["#home", "#about", "#projects", "#articles", "#gallery", "#contact", "#home"],
   hero: {
-    eyebrow: "WELCOME TO MY WEBSITE",
+    eyebrow: "WELCOME TO YURI ISSA",
     greeting: "HELLO, I'M",
     name: "YURI ISSA",
     description: "A personal space for ideas, creativity, technology and projects.",
