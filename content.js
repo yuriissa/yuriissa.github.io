@@ -5,7 +5,7 @@
 window.SITE_CONTENT = {
   siteTitle: "YURI ISSA — Personal Website",
   brandFirst: "YURI",
-  brandLast: "ISSA.",
+  brandLast: "ISSA",
   description: "Yuri Issa — personal space for ideas, creativity, technology and projects.",
   navigation: ["Home", "About", "Projects", "Articles", "Gallery", "Contact", "EN"],
   navigationTargets: ["#home", "#about", "#projects", "#articles", "#gallery", "#contact", "#home"],
@@ -61,7 +61,7 @@ window.SITE_CONTENT = {
     url: "https://github.com/yuriissa"
   },
   footer: {
-    brand: "YURI ISSA.",
+    brand: "YURI ISSA",
     copyright: "© 2026 · All Rights Reserved"
   },
   socialLinks: {
