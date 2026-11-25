@@ -1,3 +1,4 @@
+
 /* Yuri Issa — central website content file
    Edit the values below to change the website's visible text and links.
    Keep the CSS and HTML unchanged unless you want to alter the design. */
@@ -9,9 +10,9 @@ window.SITE_CONTENT = {
   navigation: ["Home", "About", "Projects", "Articles", "Gallery", "Contact", "EN"],
   navigationTargets: ["#home", "#about", "#projects", "#articles", "#gallery", "#contact", "#home"],
   hero: {
-    eyebrow: "WELCOME TO YURI ISSA",
+    eyebrow: "WELCOME TO YURI ISSA WEBSITE",
     greeting: "HELLO, I'M",
-    name: "YURI ISSA",
+    name: "ALI ISSA",
     description: "A personal space for ideas, creativity, technology and projects.",
     button: "DISCOVER MORE"
   },
