@@ -13,7 +13,7 @@ window.SITE_CONTENT = {
     eyebrow: "WELCOME TO YURI ISSA WEBSITE",
     greeting: "HELLO, I'M",
     name: "ALI ISSA",
-    description: "A personal space for ideas, creativity, technology and projects.",
+    description: "A personal world of ideas - Imagination Without Limits.",
     button: "DISCOVER MORE"
   },
   explore: { title: "EXPLORE MY WORLD", viewAll: "VIEW ALL" },
