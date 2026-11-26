@@ -7,8 +7,8 @@ window.SITE_CONTENT = {
   brandFirst: "YURI",
   brandLast: "ISSA",
   description: "Yuri Issa — personal space for ideas, creativity, technology and projects.",
-  navigation: ["Home", "About", "Projects", "Articles", "Gallery", "Contact", "EN"],
-  navigationTargets: ["#home", "#about", "projects.html", "articles.html", "designs.html", "#contact", "#home"],
+  navigation: ["Home", "About", "Projects", "Archive", "Gallery", "Contact", "EN"],
+  navigationTargets: ["#home", "#about", "projects.html", "#archive", "designs.html", "#contact", "#home"],
   hero: {
     eyebrow: "WELCOME TO YURI ISSA WEBSITE",
     greeting: "HELLO, I'M",
@@ -58,10 +58,10 @@ window.SITE_CONTENT = {
       }
     ]
   },
-  articles: {
-    kicker: "03 / ARTICLES",
-    title: "Articles",
-    description: "Ideas, lessons learned, useful discoveries and reflections — gathered in one place."
+  archive: {
+    kicker: "03 / ARCHIVE",
+    title: "My Visual Archive",
+    description: "A collection of photographs, memories and visual moments worth keeping."
   },
   gallery: {
     kicker: "04 / GALLERY",
@@ -116,8 +116,8 @@ window.SITE_CONTENT = {
     text(`.feature:nth-child(${i+1}) p`, v.description);
   });
   c.values.forEach((v,i) => html(`.values .value:nth-child(${i+1}) > span:last-child`, v));
-  const sections = [c.about,c.projects,c.articles,c.gallery,c.contact];
-  const ids = ['about','projects','articles','gallery','contact'];
+  const sections = [c.about,c.projects,c.archive,c.gallery,c.contact];
+  const ids = ['about','projects','archive','gallery','contact'];
   sections.forEach((v,i) => {
     const root = `#${ids[i]}`;
     text(`${root} .kicker`, v.kicker);
