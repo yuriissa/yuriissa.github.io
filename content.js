@@ -41,7 +41,7 @@ window.SITE_CONTENT = {
       {
         title: "Personal Projects",
         description: "A collection of personal projects and creative work.",
-        button: "VIEW PROJECT ↗",
+        button: "VIEW PROJECTS ↗",
         url: "projects.html"
       },
       {
@@ -53,7 +53,7 @@ window.SITE_CONTENT = {
       {
         title: "Articles & Insights",
         description: "Thoughts, knowledge and ideas worth sharing.",
-        button: "READ ARTICLES ↗",
+        button: "VIEW ARTICLES ↗",
         url: "articles.html"
       }
     ]
