@@ -8,7 +8,7 @@ window.SITE_CONTENT = {
   brandLast: "ISSA",
   description: "Yuri Issa — personal space for ideas, creativity, technology and projects.",
   navigation: ["Home", "About", "Projects", "Articles", "Gallery", "Contact", "EN"],
-  navigationTargets: ["#home", "#about", "#projects", "#articles", "#gallery", "#contact", "#home"],
+  navigationTargets: ["#home", "#about", "projects.html", "articles.html", "designs.html", "#contact", "#home"],
   hero: {
     eyebrow: "WELCOME TO YURI ISSA WEBSITE",
     greeting: "HELLO, I'M",
@@ -41,18 +41,20 @@ window.SITE_CONTENT = {
       {
         title: "Personal Projects",
         description: "A collection of personal projects and creative work.",
-        button: "VIEW PROJECT ↗",
-        url: "https://github.com/yuriissa/WorkTime-App"
+        button: "VIEW PROJECTS ↗",
+        url: "projects.html"
       },
       {
         title: "My Designs",
         description: "Visual creations, designs and artistic ideas.",
-        button: "VIEW DESIGNS ↗"
+        button: "VIEW DESIGNS ↗",
+        url: "designs.html"
       },
       {
         title: "Articles & Insights",
         description: "Thoughts, knowledge and ideas worth sharing.",
-        button: "READ ARTICLES ↗"
+        button: "VIEW ARTICLES ↗",
+        url: "articles.html"
       }
     ]
   },
