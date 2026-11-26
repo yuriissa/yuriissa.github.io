@@ -80,10 +80,10 @@ window.SITE_CONTENT = {
     copyright: "© 2026 · All Rights Reserved"
   },
   socialLinks: {
-    youtube: "#contact",
-    github: "https://github.com/yuriissa",
-    linkedin: "#contact",
-    x: "#contact"
+    facebook: "https://www.facebook.com/share/1JthXieUPX/",
+    whatsapp: "https://wa.me/963932971478",
+    telegram: "https://t.me/Yuriissa",
+    wechat: "#contact"
   }
 };
 
@@ -139,5 +139,5 @@ window.SITE_CONTENT = {
   const footer = one('.site-footer > div:first-child');
   if (footer) footer.innerHTML = `<span class="footer-brand"></span> ${c.footer.copyright}`;
   text('.footer-brand', c.footer.brand);
-  ['youtube','github','linkedin','x'].forEach((name,i) => attr(`.socials a:nth-child(${i+1})`, 'href', c.socialLinks[name]));
+  ['facebook','whatsapp','telegram','wechat'].forEach((name,i) => attr(`.socials a:nth-child(${i+1})`, 'href', c.socialLinks[name]));
 })();
