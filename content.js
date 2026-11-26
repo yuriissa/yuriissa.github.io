@@ -1,3 +1,4 @@
+
 /* Yuri Issa — central website content file
    Edit the values below to change the website's visible text and links.
    Keep the CSS and HTML unchanged unless you want to alter the design. */
@@ -37,9 +38,22 @@ window.SITE_CONTENT = {
     kicker: "02 / PROJECTS",
     title: "Projects & creations",
     cards: [
-      { title: "WorkTime", description: "A personal work-hours and overtime tracking project.", button: "VIEW PROJECT ↗", url: "https://github.com/yuriissa/WorkTime-App" },
-      { title: "Experiments", description: "A space for small tools, prototypes and ideas in progress." },
-      { title: "Future projects", description: "New concepts and creations will be collected here." }
+      {
+        title: "Personal Projects",
+        description: "A collection of personal projects and creative work.",
+        button: "VIEW PROJECT ↗",
+        url: "https://github.com/yuriissa/WorkTime-App"
+      },
+      {
+        title: "My Designs",
+        description: "Visual creations, designs and artistic ideas.",
+        button: "VIEW DESIGNS ↗"
+      },
+      {
+        title: "Articles & Insights",
+        description: "Thoughts, knowledge and ideas worth sharing.",
+        button: "READ ARTICLES ↗"
+      }
     ]
   },
   articles: {
