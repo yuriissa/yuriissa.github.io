@@ -626,7 +626,7 @@ a{color:inherit;text-decoration:none}
   background:linear-gradient(145deg,rgba(11,17,24,.96),rgba(5,9,14,.98));
   color:var(--orange-bright);
   font-family:var(--font-display);
-  font-size:clamp(9px,1vw,12px);
+  font-size:clamp(11px,1.15vw,14px);
   font-weight:800;
   letter-spacing:.25px;
   text-align:center;
