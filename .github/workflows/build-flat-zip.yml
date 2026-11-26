@@ -1,0 +1,26 @@
+name: Build flat website ZIP
+on:
+  push:
+    branches:
+      - site-expansion
+    paths:
+      - '.github/workflows/build-flat-zip.yml'
+permissions:
+  contents: read
+  actions: read
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: site-expansion
+      - name: Create flat ZIP
+        run: |
+          zip -j Yuri-Issa-Website-Updated.zip index.html content.js style.css projects.html designs.html articles.html README.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: yuri-issa-website-flat
+          path: Yuri-Issa-Website-Updated.zip
+          if-no-files-found: error
+          retention-days: 7
