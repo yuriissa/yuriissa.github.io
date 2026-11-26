@@ -1,13 +1,22 @@
-YURI ISSA WEBSITE — NO FOLDERS
+YURI ISSA WEBSITE — EXPANDABLE ROOT FILES
 
-Files (all in the repository root):
-- index.html: website design and layout. The main hero image is embedded inside this file, so no image folder is needed.
-- content.js: central place to edit website text, labels, descriptions, and links.
+Main files:
+- index.html: the home page and its structure.
+- content.js: central text, labels and navigation links for the home page.
+- style.css: shared visual design and layout used across all pages.
+- projects.html: personal projects collection.
+- designs.html: visual designs and creative work.
+- articles.html: articles and insights.
+- README.txt: this guide.
 
-GitHub Pages upload:
-1. Extract this ZIP on your phone.
-2. Upload index.html and content.js directly to the root of the yuriissa.github.io repository.
-3. Do not upload this ZIP as a substitute for the extracted files. GitHub Pages does not unpack ZIP files.
-4. Keep the two files together in the repository root.
+All files are kept directly in the repository root. No folders are required.
 
-The original visual artwork is preserved. The hero artwork is displayed slightly smaller on desktop and mobile as requested.
+Editing:
+1. Edit home-page wording and links in content.js where possible.
+2. Keep style.css linked from every page so the visual identity stays consistent.
+3. Add new content to the matching page, keeping the shared header, navigation and footer.
+4. Keep filenames and links consistent. File names are case-sensitive on GitHub Pages.
+
+Publishing:
+Upload or commit the changed files to the repository root. GitHub Pages publishes the site from the main branch after changes are merged there.
+The original home-page artwork remains embedded in the existing page design and is preserved in this update.
