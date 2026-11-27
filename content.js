@@ -20,7 +20,7 @@ window.SITE_CONTENT = {
   featureCards: [
     { title: "ABOUT ME", description: "My story and background." },
     { title: "PROJECTS", description: "My work and creations." },
-    { title: "ARTICLES", description: "Ideas, tips and knowledge." },
+    { title: "ARCHIVE", description: "Photographs, memories and visual moments." },
     { title: "GALLERY", description: "Photos and visual content." }
   ],
   values: [
