@@ -232,10 +232,23 @@
     <a class="contact-link contact-link-orange" href="https://www.facebook.com/share/1JthXieUPX/" target="_blank" rel="noopener noreferrer">FIND ME ON FACEBOOK</a>
     <a class="contact-link contact-link-green" href="https://wa.me/963932971478" target="_blank" rel="noopener noreferrer">FIND ME ON WHATSAPP</a>
     <a class="contact-link contact-link-orange" href="https://t.me/Yuriissa" target="_blank" rel="noopener noreferrer">FIND ME ON TELEGRAM</a>
-    <button class="contact-link contact-link-green" type="button" onclick="if (navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText('Yuri-Issa').then(() => alert('WeChat ID copied: Yuri-Issa')).catch(() => window.prompt('Copy your WeChat ID:', 'Yuri-Issa')); } else { window.prompt('Copy your WeChat ID:', 'Yuri-Issa'); }">FIND ME ON WECHAT</button>
+    <button class="contact-link contact-link-green" type="button" data-open-wechat>FIND ME ON WECHAT</button>
   </div>
 </section>
 </main>
+
+
+<div class="wechat-modal" id="wechatModal" hidden>
+  <div class="wechat-modal-backdrop" data-close-wechat></div>
+  <section class="wechat-modal-card" role="dialog" aria-modal="true" aria-labelledby="wechatModalTitle">
+    <h2 id="wechatModalTitle">WECHAT</h2>
+    <div class="wechat-id-box" aria-label="WeChat ID">Yuri-Issa</div>
+    <div class="wechat-modal-actions">
+      <button class="wechat-copy-button" type="button" id="copyWechatId">COPY ID</button>
+      <button class="wechat-close-button" type="button" data-close-wechat>CLOSE</button>
+    </div>
+  </section>
+</div>
 
 <div class="footer-divider" aria-hidden="true"></div>
 <footer class="site-footer">
@@ -250,7 +263,7 @@
     <a href="https://t.me/Yuriissa" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
       <svg viewBox="0 0 24 24"><path d="M12 1.5a10.5 10.5 0 1 0 0 21 10.5 10.5 0 0 0 0-21zm5.1 6.2-1.8 8.6c-.13.62-.5.77-1.02.48l-2.82-2.08-1.36 1.31c-.15.15-.27.27-.56.27l.2-2.87 5.23-4.73c.23-.2-.05-.32-.34-.11l-6.46 4.07-2.78-.87c-.61-.19-.62-.61.13-.9l10.87-4.19c.5-.18.95.12.71 1.02z"/></svg>
     </a>
-    <a href="#contact" aria-label="WeChat" onclick="if (navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText('Yuri-Issa').then(() => alert('WeChat ID copied: Yuri-Issa')).catch(() => window.prompt('Copy your WeChat ID:', 'Yuri-Issa')); } else { window.prompt('Copy your WeChat ID:', 'Yuri-Issa'); } return false;">
+    <a href="#contact" aria-label="WeChat" data-open-wechat>
       <svg viewBox="0 0 24 24"><path d="M9.5 3C4.81 3 1 6.13 1 10c0 2.13 1.18 4.03 3.04 5.28L3.2 18l3.02-1.5c1.02.32 2.12.5 3.28.5h.38a6.1 6.1 0 0 1-.38-2.1c0-3.53 3.42-6.4 7.64-6.4.38 0 .75.02 1.11.07C17.52 5.43 13.9 3 9.5 3zm-3.1 8.1a1.05 1.05 0 1 1 0-2.1 1.05 1.05 0 0 1 0 2.1zm6.2 0a1.05 1.05 0 1 1 0-2.1 1.05 1.05 0 0 1 0 2.1zM23 15c0-3.04-3.02-5.5-6.75-5.5S9.5 11.96 9.5 15s3.02 5.5 6.75 5.5c.91 0 1.78-.15 2.57-.43L22 21l-.7-2.1C22.35 17.9 23 16.53 23 15zm-9.1.8a.9.9 0 1 1 0-1.8.9.9 0 0 1 0 1.8zm4.7 0a.9.9 0 1 1 0-1.8.9.9 0 0 1 0 1.8z"/></svg>
     </a>
   </div>
@@ -259,6 +272,71 @@
 <script>
 document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click',()=>document.querySelector('.nav').classList.remove('open')));
 </script>
+
+<script>
+(() => {
+  const modal = document.getElementById('wechatModal');
+  const copyButton = document.getElementById('copyWechatId');
+  if (!modal || !copyButton) return;
+  const id = 'Yuri-Issa';
+  let previousFocus = null;
+  const labels = () => document.documentElement.lang === 'ar'
+    ? { title: 'وي تشات', copy: 'نسخ المعرّف', close: 'إغلاق', copied: 'تم النسخ' }
+    : { title: 'WECHAT', copy: 'COPY ID', close: 'CLOSE', copied: 'COPIED' };
+  const syncLanguage = () => {
+    const t = labels();
+    document.getElementById('wechatModalTitle').textContent = t.title;
+    copyButton.textContent = t.copy;
+    modal.querySelector('.wechat-close-button').textContent = t.close;
+  };
+  const openModal = event => {
+    event.preventDefault();
+    previousFocus = event.currentTarget;
+    syncLanguage();
+    modal.hidden = false;
+    document.body.classList.add('wechat-modal-open');
+    copyButton.focus();
+  };
+  const closeModal = () => {
+    modal.hidden = true;
+    document.body.classList.remove('wechat-modal-open');
+    if (previousFocus) previousFocus.focus();
+  };
+  const fallbackCopy = () => {
+    const field = document.createElement('textarea');
+    field.value = id;
+    field.setAttribute('readonly', '');
+    field.style.position = 'fixed';
+    field.style.opacity = '0';
+    document.body.appendChild(field);
+    field.select();
+    let copied = false;
+    try { copied = document.execCommand('copy'); } catch (error) {}
+    field.remove();
+    return copied;
+  };
+  document.querySelectorAll('[data-open-wechat]').forEach(button => button.addEventListener('click', openModal));
+  modal.querySelectorAll('[data-close-wechat]').forEach(button => button.addEventListener('click', closeModal));
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && !modal.hidden) closeModal();
+  });
+  copyButton.addEventListener('click', async () => {
+    let copied = false;
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(id);
+        copied = true;
+      }
+    } catch (error) {}
+    if (!copied) copied = fallbackCopy();
+    if (copied) {
+      copyButton.textContent = labels().copied;
+      window.setTimeout(() => { if (!modal.hidden) copyButton.textContent = labels().copy; }, 1600);
+    }
+  });
+})();
+</script>
+
 <script src="content.js"></script>
 <script src="language.js"></script>
 </body>
