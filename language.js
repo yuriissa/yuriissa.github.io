@@ -75,7 +75,7 @@
   };
   const map = translations[page] || {};
   const original = new Map();
-  const selectors = new Set([...Object.keys(map),".nav-label",".lang-current",".hero h1",".site-footer > div:first-child"]);
+  const selectors = new Set([...Object.keys(map),".nav-label",".lang-current",".hero h1",".hero h1 span",".site-footer > div:first-child"]);
   selectors.forEach(sel=>document.querySelectorAll(sel).forEach((el,i)=>original.set(el,el.innerHTML)));
   const setLeading=(el,value)=>{
     const node=[...el.childNodes].find(n=>n.nodeType===Node.TEXT_NODE);
@@ -102,7 +102,7 @@
       });
       if(page==="index"){
         const h=document.querySelector(".hero h1");
-        if(h)setLeading(h,"مرحبًا، أنا");
+        if(h){setLeading(h,"مرحبًا، أنا");const name=h.querySelector("span");if(name)name.textContent="علي عيسى";}
       }
       const foot=document.querySelector(".site-footer > div:first-child");
       if(foot){
