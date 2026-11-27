@@ -587,6 +587,15 @@ a{color:inherit;text-decoration:none}
   .site-footer{flex-direction:column;gap:14px;text-align:center}
 }
 
+/* Desktop-only trial: new combined shield and background image */
+@media (min-width:961px){
+  .hero{
+    background-image:url('Newsh.jpg');
+    background-size:56% auto;
+    background-position:100% 50%;
+  }
+}
+
 /* Shared layouts for the inner pages */
 .page-main{min-height:58vh;padding-top:34px}
 .page-intro{max-width:1180px;margin:0 auto;padding:68px 7% 26px}
