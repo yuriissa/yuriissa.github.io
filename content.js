@@ -7,8 +7,8 @@ window.SITE_CONTENT = {
   brandFirst: "YURI",
   brandLast: "ISSA",
   description: "Yuri Issa — personal space for ideas, creativity, technology and projects.",
-  navigation: ["Home", "About", "Projects", "Archive", "Gallery", "Contact", "EN"],
-  navigationTargets: ["#home", "#about", "projects.html", "#archive", "designs.html", "#contact", "#home"],
+  navigation: ["Projects", "Home", "Archive", "Gallery", "Contact"],
+  navigationTargets: ["projects.html", "#home", "#archive", "#gallery", "#contact"],
   hero: {
     eyebrow: "WELCOME TO YURI ISSA WEBSITE",
     greeting: "HELLO, I'M",
@@ -95,6 +95,8 @@ window.SITE_CONTENT = {
   const html = (s, v) => { const e = one(s); if (e && v !== undefined) e.innerHTML = v; };
   const label = (s, v) => {
     const e = one(s); if (!e || v === undefined) return;
+    const wrapped = e.querySelector(".nav-label");
+    if (wrapped) { wrapped.textContent = v; return; }
     const nodes = [...e.childNodes].filter(n => n.nodeType === Node.TEXT_NODE && n.textContent.trim());
     if (nodes.length) nodes[0].textContent = " " + v + " ";
     else e.insertBefore(document.createTextNode(v), e.firstChild);
