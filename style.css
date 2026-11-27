@@ -697,7 +697,9 @@ a{color:inherit;text-decoration:none}
 }
 .language-menu button[aria-pressed="true"] span{color:var(--green)}
 /* Arabic changes text flow only; it never reverses the page layout. */
-.arabic-copy{direction:rtl;text-align:right;unicode-bidi:plaintext}
+.arabic-copy{direction:rtl;text-align:left;unicode-bidi:plaintext}
+/* Keep the hero welcome line in its original left-side flex position. */
+.eyebrow.arabic-copy{direction:ltr;text-align:left;unicode-bidi:plaintext}
 .nav-label{unicode-bidi:plaintext}
 @media(max-width:760px){
   .lang-wrap{height:44px}

@@ -2,7 +2,7 @@
 (function(){
   const path = location.pathname.split("/").pop() || "index.html";
   const page = path === "projects.html" ? "projects" : path === "designs.html" ? "designs" : path === "articles.html" ? "articles" : "index";
-  const navArabic = ["المشاريع","الرئيسية","الأرشيف","المعرض","تواصل"];
+  const navArabic = ["الرئيسية","المشاريع","الأرشيف","المعرض","تواصل"];
   const translations = {
     index: {
       ".eyebrow":"مرحبًا بكم في موقع يوري عيسى",
