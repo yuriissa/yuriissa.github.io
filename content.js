@@ -7,8 +7,8 @@ window.SITE_CONTENT = {
   brandFirst: "YURI",
   brandLast: "ISSA",
   description: "Yuri Issa — personal space for ideas, creativity, technology and projects.",
-  navigation: ["Projects", "Home", "Archive", "Gallery", "Contact"],
-  navigationTargets: ["projects.html", "#home", "#archive", "#gallery", "#contact"],
+  navigation: ["Home", "Projects", "Archive", "Gallery", "Contact"],
+  navigationTargets: ["#home", "projects.html", "#archive", "#gallery", "#contact"],
   hero: {
     eyebrow: "WELCOME TO YURI ISSA WEBSITE",
     greeting: "HELLO, I'M",
