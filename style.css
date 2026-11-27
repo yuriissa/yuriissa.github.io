@@ -769,3 +769,91 @@ body.wechat-modal-open{overflow:hidden}
 .wechat-modal-actions button:focus-visible{outline:2px solid #fff;outline-offset:3px}
 @keyframes wechatModalIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
 @media(prefers-reduced-motion:reduce){.wechat-modal-card{animation:none}.wechat-modal-actions button{transition:none}}
+
+
+/* ================= INTERACTIVE CORE VALUES ================= */
+.values .value{
+  appearance:none;-webkit-appearance:none;
+  width:100%;margin:0;
+  background:transparent;
+  font:inherit;
+  text-align:inherit;
+  cursor:pointer;
+  border-top:0;border-bottom:0;border-left:0;
+  transition:color .2s ease,background .2s ease,filter .2s ease;
+}
+.values .value:hover,
+.values .value:focus-visible,
+.values .value[aria-expanded="true"]{
+  color:#fff;
+  filter:drop-shadow(0 0 9px rgba(255,123,28,.2));
+}
+.values .value:focus-visible{
+  outline:2px solid var(--orange-bright);
+  outline-offset:-3px;
+  border-radius:8px;
+}
+.value-popover[hidden]{display:none}
+.value-popover{
+  position:fixed;z-index:90;
+  width:min(440px,calc(100vw - 32px));
+  display:flex;align-items:flex-start;gap:15px;
+  padding:22px 48px 22px 22px;
+  border:1px solid rgba(255,123,28,.62);
+  border-radius:16px;
+  background:
+    radial-gradient(circle at 92% 10%,rgba(255,123,28,.13),transparent 42%),
+    linear-gradient(145deg,#101a25 0%,#060b11 100%);
+  box-shadow:0 18px 48px rgba(0,0,0,.72),0 0 22px rgba(255,123,28,.12),inset 0 1px 0 rgba(255,255,255,.055);
+  animation:valuePopoverIn .28s cubic-bezier(.2,.8,.2,1) both;
+}
+.value-popover:before{
+  content:"";position:absolute;top:-8px;left:var(--value-arrow-left,50%);
+  width:14px;height:14px;
+  background:#101a25;border-top:1px solid rgba(255,123,28,.62);border-left:1px solid rgba(255,123,28,.62);
+  transform:translateX(-50%) rotate(45deg);
+}
+.value-popover.opens-up:before{
+  top:auto;bottom:-8px;transform:translateX(-50%) rotate(225deg);
+}
+.value-popover-accent{
+  width:3px;align-self:stretch;min-height:54px;flex-shrink:0;
+  border-radius:5px;
+  background:linear-gradient(180deg,var(--orange-bright),var(--orange-deep));
+  box-shadow:0 0 13px rgba(255,123,28,.5);
+}
+.value-popover-copy{min-width:0}
+.value-popover-kicker{
+  margin:0 0 7px;color:var(--orange-bright);
+  font:700 9px var(--font-display);letter-spacing:1.6px;
+}
+.value-popover h3{
+  margin:0 0 8px;color:#fff;
+  font:800 16px var(--font-display);line-height:1.3;
+}
+.value-popover p{
+  margin:0;color:#c3ccd6;
+  font:400 13px/1.7 var(--font-body);
+}
+.value-popover-close{
+  position:absolute;top:10px;right:11px;
+  width:29px;height:29px;border:1px solid #354454;border-radius:8px;
+  background:rgba(255,255,255,.035);color:#dce2ea;
+  font:400 22px/1 var(--font-body);cursor:pointer;
+  transition:color .18s ease,border-color .18s ease,background .18s ease;
+}
+.value-popover-close:hover{color:var(--orange-bright);border-color:var(--orange);background:rgba(255,123,28,.08)}
+.value-popover-close:focus-visible{outline:2px solid #fff;outline-offset:3px}
+@keyframes valuePopoverIn{
+  from{opacity:0;transform:translateY(9px) scale(.975);filter:blur(2px)}
+  to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
+}
+@media(max-width:600px){
+  .value-popover{padding:20px 44px 20px 18px;gap:12px}
+  .value-popover h3{font-size:15px}
+  .value-popover p{font-size:12.5px;line-height:1.65}
+}
+@media(prefers-reduced-motion:reduce){
+  .value-popover{animation:none}
+  .values .value,.value-popover-close{transition:none}
+}
