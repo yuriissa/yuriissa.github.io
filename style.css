@@ -884,3 +884,6 @@ body.wechat-modal-open{overflow:hidden}
 [dir="rtl"] .public-post-detail,[dir="rtl"] .public-post-copy{text-align:right}
 @media(max-width:850px){.public-post-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.public-post-grid{grid-template-columns:1fr}.public-feed-section,.public-feed-wrap{padding:32px 5%}.public-post-detail-shell{padding:32px 4% 56px}}
+
+.public-post-detail[dir="rtl"],.public-post-copy[dir="rtl"]{text-align:right}
+.public-post-detail[dir="ltr"],.public-post-copy[dir="ltr"]{text-align:left}
