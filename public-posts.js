@@ -104,7 +104,13 @@
   function renderFeed(container, posts) {
     var kind = container.getAttribute("data-public-feed") || "all";
     var limit = Math.max(1, Math.min(100, Number(container.getAttribute("data-limit")) || 12));
-    var filtered = posts.filter(function (post) {
+    // Ignore malformed API entries before reading fields or creating links.
+    var validPosts = posts.filter(function (post) {
+      return post && typeof post === "object" &&
+        typeof post.id === "string" && /^[a-f0-9-]{16,64}$/i.test(post.id) &&
+        (post.type === "article" || post.type === "project");
+    });
+    var filtered = validPosts.filter(function (post) {
       return kind === "all" || post.type === kind;
     }).slice(0, limit);
 
@@ -115,9 +121,7 @@
       return;
     }
     var grid = make("div", "public-post-grid");
-    filtered.forEach(function (post) {
-      if (post && typeof post.id === "string" && post.id.length <= 64) grid.appendChild(renderCard(post));
-    });
+    filtered.forEach(function (post) { grid.appendChild(renderCard(post)); });
     container.appendChild(grid);
   }
 
