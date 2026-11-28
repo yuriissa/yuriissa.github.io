@@ -38,6 +38,12 @@ jobs:
           if (source.includes('innerHTML')) throw new Error('Dynamic public content must not be inserted with innerHTML.');
           if (!source.includes('root.replaceChildren(loadingNote, grid)') || !source.includes('loadingNote.remove()')) throw new Error('The posts grid must remain mounted while loading and after successful rendering.');
           if (!source.includes('image_alt') || !source.includes('item.alt_text')) throw new Error('Post and gallery image alternative text mappings are missing.');
+          if (!source.includes('async function renderHomeFeed') || !source.includes('else if (page === "index")')) throw new Error('Homepage published-post feed is missing.');
+          const home = fs.readFileSync('index.html', 'utf8');
+          if (!home.includes('data-public-feed="all"') || !home.includes('public-content.js')) throw new Error('Homepage feed markup or script is missing.');
+          const homeLanguage = home.indexOf('<script src="language.js"></script>');
+          const homeContent = home.indexOf('<script src="public-content.js"></script>');
+          if (homeLanguage < 0 || homeContent <= homeLanguage) throw new Error('Homepage must load the language layer before the public content layer.');
           for (const file of ['projects.html', 'articles.html', 'designs.html']) {
             const html = fs.readFileSync(file, 'utf8');
             const language = html.indexOf('<script src="language.js"></script>');
