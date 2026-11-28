@@ -52,6 +52,14 @@
     const date = new Date(Number(value) * 1000);
     return Number.isNaN(date.getTime()) ? "" : new Intl.DateTimeFormat(language() === "ar" ? "ar" : "en", { dateStyle: "medium" }).format(date);
   };
+  const safeImageUrl = value => {
+    try {
+      const url = new URL(value);
+      return url.protocol === "https:" && url.hostname === "ik.imagekit.io" ? url.href : "";
+    } catch {
+      return "";
+    }
+  };
   async function getJson(path) {
     const response = await fetch(API_BASE + path, {
       method: "GET",
@@ -67,9 +75,9 @@
   }
   function postCard(post, type) {
     const card = el("article", "info-card public-post-card");
-    if (post.image_url) {
+    if (safeImageUrl(post.image_url)) {
       const image = el("img", "public-post-image");
-      image.src = post.image_url;
+      image.src = safeImageUrl(post.image_url);
       image.alt = post.image_alt || post.title || "";
       image.loading = "lazy";
       image.decoding = "async";
@@ -153,10 +161,10 @@
       }
       const grid = el("div", "public-gallery-grid");
       images.forEach(item => {
-        if (!item.image_url) return;
+        const imageUrl = safeImageUrl(item.image_url);\n        if (!imageUrl) return;
         const figure = el("figure", "public-gallery-item");
         const image = el("img", "", item.alt_text || item.filename || "");
-        image.src = item.image_url;
+        image.src = imageUrl;
         image.alt = item.alt_text || item.filename || "";
         image.loading = "lazy";
         image.decoding = "async";
