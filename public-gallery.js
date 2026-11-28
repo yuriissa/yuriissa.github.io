@@ -29,6 +29,7 @@
     }
     var grid = make("div", "public-gallery-grid");
     images.forEach(function (item) {
+      if (!item || typeof item !== "object") return;
       var src = safeImageUrl(item.image_url);
       if (!src) return;
       var figure = make("figure", "public-gallery-item");
