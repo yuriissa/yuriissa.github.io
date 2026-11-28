@@ -158,7 +158,11 @@
       loadingNote.remove();
     } catch {
       if (token !== renderToken) return;
-      statusNote(root, t("unavailable"));
+      if (grid.children.length) {
+        loadingNote.textContent = t("unavailable");
+      } else {
+        statusNote(root, t("unavailable"));
+      }
     }
   }
   async function renderGallery(token) {
