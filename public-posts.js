@@ -66,12 +66,19 @@
     addImage(link, post, "public-post-image");
 
     var copy = make("div", "public-post-copy");
+    copy.dir = isArabic() ? "rtl" : "ltr";
     var typeLabel = post.type === "project" ? text("مشروع", "Project") : text("مقال", "Article");
     var date = formatDate(post.published_at);
-    copy.appendChild(make("div", "public-post-meta", date ? typeLabel + " · " + date : typeLabel));
-    copy.appendChild(make("h3", "public-post-title", post.title || text("منشور بلا عنوان", "Untitled post")));
-    if (post.summary) copy.appendChild(make("p", "public-post-summary", post.summary));
-    copy.appendChild(make("span", "public-post-read", text("اقرأ المزيد", "Read more")));
+    var meta = make("div", "public-post-meta", date ? typeLabel + " · " + date : typeLabel);
+    meta.dir = isArabic() ? "rtl" : "ltr";
+    copy.appendChild(meta);
+    var title = make("h3", "public-post-title", post.title || text("منشور بلا عنوان", "Untitled post"));
+    title.dir = "auto";
+    copy.appendChild(title);
+    if (post.summary) { var summary = make("p", "public-post-summary", post.summary); summary.dir = "auto"; copy.appendChild(summary); }
+    var readMore = make("span", "public-post-read", text("اقرأ المزيد", "Read more"));
+    readMore.dir = isArabic() ? "rtl" : "ltr";
+    copy.appendChild(readMore);
     link.appendChild(copy);
     article.appendChild(link);
     return article;
@@ -132,13 +139,20 @@
   function renderDetail(container, post) {
     container.replaceChildren();
     var article = make("article", "public-post-detail");
+    article.dir = isArabic() ? "rtl" : "ltr";
     var typeLabel = post.type === "project" ? text("مشروع", "Project") : text("مقال", "Article");
     var date = formatDate(post.published_at);
-    article.appendChild(make("div", "public-post-meta", date ? typeLabel + " · " + date : typeLabel));
-    article.appendChild(make("h1", "public-post-detail-title", post.title || text("منشور بلا عنوان", "Untitled post")));
-    if (post.summary) article.appendChild(make("p", "public-post-detail-summary", post.summary));
+    var meta = make("div", "public-post-meta", date ? typeLabel + " · " + date : typeLabel);
+    meta.dir = isArabic() ? "rtl" : "ltr";
+    article.appendChild(meta);
+    var title = make("h1", "public-post-detail-title", post.title || text("منشور بلا عنوان", "Untitled post"));
+    title.dir = "auto";
+    article.appendChild(title);
+    if (post.summary) { var summary = make("p", "public-post-detail-summary", post.summary); summary.dir = "auto"; article.appendChild(summary); }
     addImage(article, post, "public-post-detail-image");
-    article.appendChild(make("div", "public-post-body", post.body || ""));
+    var body = make("div", "public-post-body", post.body || "");
+    body.dir = "auto";
+    article.appendChild(body);
     container.appendChild(article);
   }
 
