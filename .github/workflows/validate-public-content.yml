@@ -41,6 +41,9 @@ jobs:
           if (!source.includes('async function renderHomeFeed') || !source.includes('else if (page === "index")')) throw new Error('Homepage published-post feed is missing.');
           const home = fs.readFileSync('index.html', 'utf8');
           if (!home.includes('data-public-feed="all"') || !home.includes('public-content.js')) throw new Error('Homepage feed markup or script is missing.');
+          if (!home.includes('href="articles.html">VIEW ARTICLES</a>') || !home.includes('href="projects.html">VIEW PROJECTS</a>')) throw new Error('Homepage must link to both article and project collections.');
+          const languageSource = fs.readFileSync('language.js', 'utf8');
+          if (!languageSource.includes('#latest-posts h2') || !languageSource.includes('#latest-posts .view-all:last-of-type')) throw new Error('Homepage latest-posts Arabic translations are missing.');
           const homeLanguage = home.indexOf('<script src="language.js"></script>');
           const homeContent = home.indexOf('<script src="public-content.js"></script>');
           if (homeLanguage < 0 || homeContent <= homeLanguage) throw new Error('Homepage must load the language layer before the public content layer.');
