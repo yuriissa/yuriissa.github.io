@@ -1,0 +1,58 @@
+name: Validate public content integration
+
+on:
+  push:
+    branches: [feature/public-content-api-integration, feature/public-content-preview-switch]
+  pull_request:
+    branches: [main, feature/public-content-api-integration]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out website
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check public content script syntax
+        run: node --check public-content.js && node --check language.js
+      - name: Verify safe API integration wiring
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const source = fs.readFileSync('public-content.js', 'utf8');
+          if (!source.includes('https://yuri-issa-admin.yuri-issa37.workers.dev')) throw new Error('Production API base URL is missing.');
+          if (source.includes('const API_BASES = {')) {
+            if (!source.includes('https://feature-admin-post-management-verified-yuri-issa-admin.yuri-issa37.workers.dev')) throw new Error('Preview API base URL is missing.');
+            if (!source.includes('get("preview") === "1"')) throw new Error('Preview mode must require an explicit query parameter.');
+            if (!source.includes('&preview=1')) throw new Error('Article navigation must preserve Preview mode.');
+            if (!source.includes('?preview=1')) throw new Error('Back navigation must preserve Preview mode.');
+          }
+          if (!source.includes('url.hostname === "ik.imagekit.io"')) throw new Error('ImageKit URL allow-list is missing.');
+          if (!source.includes('credentials: "omit"') || !source.includes('method: "GET"')) throw new Error('Public API requests must remain read-only and omit credentials.');
+          if (source.includes('innerHTML')) throw new Error('Dynamic public content must not be inserted with innerHTML.');
+          if (!source.includes('root.replaceChildren(loadingNote, grid)') || !source.includes('loadingNote.remove()')) throw new Error('The posts grid must remain mounted while loading and after successful rendering.');
+          if (!source.includes('if (grid.children.length)') || !source.includes('loadingNote.textContent = t("unavailable")')) throw new Error('Existing collection cards must remain visible if the public API is temporarily unavailable.');
+          if (!source.includes('image_alt') || !source.includes('item.alt_text')) throw new Error('Post and gallery image alternative text mappings are missing.');
+          if (!source.includes('async function renderHomeFeed') || !source.includes('else if (page === "index")')) throw new Error('Homepage published-post feed is missing.');
+          const home = fs.readFileSync('index.html', 'utf8');
+          if (!home.includes('data-public-feed="all"') || !home.includes('public-content.js')) throw new Error('Homepage feed markup or script is missing.');
+          if (!home.includes('href="articles.html">VIEW ARTICLES</a>') || !home.includes('href="projects.html">VIEW PROJECTS</a>')) throw new Error('Homepage must link to both article and project collections.');
+          const languageSource = fs.readFileSync('language.js', 'utf8');
+          if (!languageSource.includes('#latest-posts h2') || !languageSource.includes('#latest-posts .view-all:last-of-type')) throw new Error('Homepage latest-posts Arabic translations are missing.');
+          const homeLanguage = home.indexOf('<script src="language.js"></script>');
+          const homeContent = home.indexOf('<script src="public-content.js"></script>');
+          if (homeLanguage < 0 || homeContent <= homeLanguage) throw new Error('Homepage must load the language layer before the public content layer.');
+          for (const file of ['projects.html', 'articles.html', 'designs.html']) {
+            const html = fs.readFileSync(file, 'utf8');
+            const language = html.indexOf('<script src="language.js"></script>');
+            const content = html.indexOf('<script src="public-content.js"></script>');
+            if (language < 0 || content <= language) throw new Error(file + ' must load the language layer before the public content layer.');
+          }
+          console.log('Public content wiring, read-only requests, and safe rendering checks passed.');
+          NODE
