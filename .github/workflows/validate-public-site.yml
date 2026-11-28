@@ -51,6 +51,10 @@ jobs:
           const script = fs.readFileSync('public-posts.js', 'utf8');
           const gallery = fs.readFileSync('public-gallery.js', 'utf8');
           if (!script.includes('/api/public/posts')) throw new Error('Public API endpoint is missing');
+          const previewWorker = 'https://feature-admin-post-management-verified-yuri-issa-admin.yuri-issa37.workers.dev';
+          if (!script.includes(previewWorker) || !gallery.includes(previewWorker)) {
+            throw new Error('Public clients must remain connected to the reviewed Preview Worker until production approval.');
+          }
           if (/method\s*:\s*["'](?:POST|PUT|PATCH|DELETE)["']/i.test(script)) {
             throw new Error('Public website script must remain read-only');
           }
