@@ -31,7 +31,8 @@ jobs:
             'index.html': ['data-public-feed="all"', 'public-posts.js'],
             'articles.html': ['data-public-feed="article"', 'public-posts.js'],
             'projects.html': ['data-public-feed="project"', 'public-posts.js'],
-            'post.html': ['data-public-post-detail', 'public-posts.js', 'language.js']
+            'post.html': ['data-public-post-detail', 'public-posts.js', 'language.js'],
+            'designs.html': ['data-public-gallery', 'public-gallery.js']
           };
           for (const [file, markers] of Object.entries(required)) {
             const source = fs.readFileSync(file, 'utf8');
@@ -40,11 +41,16 @@ jobs:
             }
           }
           const script = fs.readFileSync('public-posts.js', 'utf8');
+          const gallery = fs.readFileSync('public-gallery.js', 'utf8');
           if (!script.includes('/api/public/posts')) throw new Error('Public API endpoint is missing');
           if (/method\s*:\s*["'](?:POST|PUT|PATCH|DELETE)["']/i.test(script)) {
             throw new Error('Public website script must remain read-only');
           }
           if (script.includes('innerHTML')) throw new Error('User content must not be inserted with innerHTML');
           if (!script.includes('ik.imagekit.io')) throw new Error('Image host allowlist is missing');
+          if (!gallery.includes('/api/public/gallery')) throw new Error('Public gallery API endpoint is missing');
+          if (/method\\s*:\\s*[\"'](?:POST|PUT|PATCH|DELETE)[\"']/i.test(gallery)) throw new Error('Public gallery client must remain read-only');
+          if (gallery.includes('innerHTML')) throw new Error('Gallery content must not be inserted with innerHTML');
+          if (!gallery.includes('ik.imagekit.io')) throw new Error('Gallery image host allowlist is missing');
           console.log('Public pages, read-only API wiring, and safe text rendering verified.');
           NODE
