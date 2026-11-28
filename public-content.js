@@ -4,7 +4,7 @@
 (() => {
   "use strict";
 
-    const API_BASE = (document.querySelector('meta[name="yuriissa-api-base"]')?.content || "").trim().replace(/\/$/, "");
+  const API_BASE = (document.querySelector('meta[name="yuriissa-api-base"]')?.content || "").trim().replace(/\/$/, "");
   const API = API_BASE ? API_BASE + "/api/public" : "";
   const make = (tag, className, value) => {
     const node = document.createElement(tag);
