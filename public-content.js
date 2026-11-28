@@ -4,7 +4,8 @@
 (() => {
   "use strict";
 
-  const API_BASE = (document.querySelector('meta[name="yuriissa-api-base"]')?.content || "").trim().replace(/\\/$/, "");\n  const API = API_BASE ? API_BASE + "/api/public" : "";
+    const API_BASE = (document.querySelector('meta[name="yuriissa-api-base"]')?.content || "").trim().replace(/\/$/, "");
+  const API = API_BASE ? API_BASE + "/api/public" : "";
   const make = (tag, className, value) => {
     const node = document.createElement(tag);
     if (className) node.className = className;
@@ -22,7 +23,8 @@
     return Number.isFinite(date.getTime()) ? date.toLocaleDateString(document.documentElement.lang === "ar" ? "ar" : "en") : "";
   };
   const get = async (path) => {
-    if (!API) throw new Error("Public API base URL is not configured");\n    const response = await fetch(API + path, { method: "GET", headers: { Accept: "application/json" }, mode: "cors", credentials: "omit" });
+    if (!API) throw new Error("Public API base URL is not configured");
+    const response = await fetch(API + path, { method: "GET", headers: { Accept: "application/json" }, mode: "cors", credentials: "omit" });
     if (!response.ok) throw new Error("Public content unavailable");
     return response.json();
   };
@@ -159,5 +161,6 @@
   loadProjects();
   loadArticles();
   loadProjectPage();
-  loadGallery();\n  loadArticlePage();
+  loadGallery();
+  loadArticlePage();
 })();
