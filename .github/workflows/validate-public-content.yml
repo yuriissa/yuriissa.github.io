@@ -37,6 +37,7 @@ jobs:
           if (!source.includes('credentials: "omit"') || !source.includes('method: "GET"')) throw new Error('Public API requests must remain read-only and omit credentials.');
           if (source.includes('innerHTML')) throw new Error('Dynamic public content must not be inserted with innerHTML.');
           if (!source.includes('root.replaceChildren(loadingNote, grid)') || !source.includes('loadingNote.remove()')) throw new Error('The posts grid must remain mounted while loading and after successful rendering.');
+          if (!source.includes('if (grid.children.length)') || !source.includes('loadingNote.textContent = t("unavailable")')) throw new Error('Existing collection cards must remain visible if the public API is temporarily unavailable.');
           if (!source.includes('image_alt') || !source.includes('item.alt_text')) throw new Error('Post and gallery image alternative text mappings are missing.');
           if (!source.includes('async function renderHomeFeed') || !source.includes('else if (page === "index")')) throw new Error('Homepage published-post feed is missing.');
           const home = fs.readFileSync('index.html', 'utf8');
