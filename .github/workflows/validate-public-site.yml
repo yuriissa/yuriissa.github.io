@@ -42,6 +42,12 @@ jobs:
               if (!source.includes(marker)) throw new Error(file + ' is missing ' + marker);
             }
           }
+          for (const file of ['index.html', 'projects.html', 'articles.html', 'designs.html', 'post.html']) {
+            const source = fs.readFileSync(file, 'utf8');
+            if (source.includes('yuri-issa-admin.yuri-issa37.workers.dev')) {
+              throw new Error(file + ' must not link the public brand/navigation to the private admin Worker');
+            }
+          }
           const script = fs.readFileSync('public-posts.js', 'utf8');
           const gallery = fs.readFileSync('public-gallery.js', 'utf8');
           if (!script.includes('/api/public/posts')) throw new Error('Public API endpoint is missing');
