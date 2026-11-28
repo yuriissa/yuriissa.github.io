@@ -169,6 +169,7 @@
   }
 
   function updateHeadings() {
+    document.querySelectorAll("[data-post-back]").forEach(function (link) { link.textContent = text("العودة إلى المقالات", "← Back to articles"); });
     document.querySelectorAll("[data-public-feed-title]").forEach(function (heading) {
       var kind = heading.getAttribute("data-public-feed-title");
       heading.textContent = kind === "project"
