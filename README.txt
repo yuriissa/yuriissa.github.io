@@ -20,3 +20,20 @@ Editing:
 Publishing:
 Upload or commit the changed files to the repository root. GitHub Pages publishes the site from the main branch after changes are merged there.
 The original home-page artwork remains embedded in the existing page design and is preserved in this update.
+
+
+PUBLIC POSTS INTEGRATION — PREVIEW ONLY
+
+- public-posts.js reads published posts from the YURI ISSA administration Worker.
+- index.html displays the latest published posts.
+- articles.html displays published articles.
+- projects.html displays published projects.
+- post.html displays one published post using its ID in the query string.
+- The public website uses GET requests only. It has no administrator credentials and cannot create, edit, publish, or delete posts.
+- Post text is inserted as text, not executable HTML. Featured images are accepted only from the ImageKit HTTPS host.
+
+IMPORTANT:
+The current public-posts.js endpoint is the development Preview Worker:
+https://feature-admin-post-management-verified-yuri-issa-admin.yuri-issa37.workers.dev
+
+This is intentional for development. Do not merge this website integration into the live main branch until the production Worker API has been reviewed, deployed with the correct production database and ImageKit configuration, and the API endpoint in public-posts.js has been changed to the approved production Worker URL. Production website and production Worker must remain untouched during preview testing.
