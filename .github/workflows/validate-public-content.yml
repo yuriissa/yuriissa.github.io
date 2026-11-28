@@ -2,7 +2,7 @@ name: Validate public content integration
 
 on:
   push:
-    branches: [feature/public-content-api-integration, feature/public-content-preview-switch]
+    branches: [feature/public-content-api-integration, feature/public-content-preview-switch, feature/standalone-visual-preview]
   pull_request:
     branches: [main, feature/public-content-api-integration]
 
@@ -38,6 +38,10 @@ jobs:
           if (source.includes('innerHTML')) throw new Error('Dynamic public content must not be inserted with innerHTML.');
           if (!source.includes('root.replaceChildren(loadingNote, grid)') || !source.includes('loadingNote.remove()')) throw new Error('The posts grid must remain mounted while loading and after successful rendering.');
           if (!source.includes('image_alt') || !source.includes('item.alt_text')) throw new Error('Post and gallery image alternative text mappings are missing.');
+          if (source.includes('fetch("preview-content.json"')) {
+            const snapshot = JSON.parse(fs.readFileSync('preview-content.json', 'utf8'));
+            if (!Array.isArray(snapshot.posts) || !snapshot.posts.some(post => post.id === '986a4f6e-6052-4ac0-97c3-c093b0bd2111' && post.title === 'نظام')) throw new Error('The isolated preview snapshot must contain the published test article.');
+          }
           for (const file of ['projects.html', 'articles.html', 'designs.html']) {
             const html = fs.readFileSync(file, 'utf8');
             const language = html.indexOf('<script src="language.js"></script>');
