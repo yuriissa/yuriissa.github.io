@@ -4,7 +4,12 @@
 (() => {
   "use strict";
 
-  const API_BASE = "https://yuri-issa-admin.yuri-issa37.workers.dev";
+  const API_BASES = {
+    production: "https://yuri-issa-admin.yuri-issa37.workers.dev",
+    preview: "https://feature-admin-post-management-verified-yuri-issa-admin.yuri-issa37.workers.dev"
+  };
+  const previewMode = new URLSearchParams(location.search).get("preview") === "1";
+  const API_BASE = previewMode ? API_BASES.preview : API_BASES.production;
   const pageName = location.pathname.split("/").pop() || "index.html";
   const page = pageName === "projects.html" ? "projects"
     : pageName === "articles.html" ? "articles"
@@ -92,7 +97,7 @@
     const date = dateText(post.published_at);
     if (date) card.append(el("p", "public-post-date", date));
     const link = el("a", "page-link", t("read"));
-    link.href = (type === "project" ? "projects.html" : "articles.html") + "?post=" + encodeURIComponent(post.id);
+    link.href = (type === "project" ? "projects.html" : "articles.html") + "?post=" + encodeURIComponent(post.id) + (previewMode ? "&preview=1" : "");
     card.append(link);
     return card;
   }
@@ -100,7 +105,7 @@
     container.replaceChildren();
     const article = el("article", "public-post-detail");
     const back = el("a", "page-link public-back-link", "← " + t("back"));
-    back.href = type === "project" ? "projects.html" : "articles.html";
+    back.href = (type === "project" ? "projects.html" : "articles.html") + (previewMode ? "?preview=1" : "");
     article.append(back);
     article.append(el("div", "public-post-type", type === "project" ? t("project") : t("article")));
     article.append(el("h2", "public-detail-title", post.title || ""));
