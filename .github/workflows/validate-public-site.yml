@@ -1,0 +1,50 @@
+name: Validate public website
+
+on:
+  push:
+    branches:
+      - feature/public-posts-integration
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check public posts JavaScript syntax
+        run: node --check public-posts.js
+      - name: Verify integration wiring and read-only boundary
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const required = {
+            'index.html': ['data-public-feed="all"', 'public-posts.js'],
+            'articles.html': ['data-public-feed="article"', 'public-posts.js'],
+            'projects.html': ['data-public-feed="project"', 'public-posts.js'],
+            'post.html': ['data-public-post-detail', 'public-posts.js', 'language.js']
+          };
+          for (const [file, markers] of Object.entries(required)) {
+            const source = fs.readFileSync(file, 'utf8');
+            for (const marker of markers) {
+              if (!source.includes(marker)) throw new Error(file + ' is missing ' + marker);
+            }
+          }
+          const script = fs.readFileSync('public-posts.js', 'utf8');
+          if (!script.includes('/api/public/posts')) throw new Error('Public API endpoint is missing');
+          if (/method\s*:\s*["'](?:POST|PUT|PATCH|DELETE)["']/i.test(script)) {
+            throw new Error('Public website script must remain read-only');
+          }
+          if (script.includes('innerHTML')) throw new Error('User content must not be inserted with innerHTML');
+          if (!script.includes('ik.imagekit.io')) throw new Error('Image host allowlist is missing');
+          console.log('Public pages, read-only API wiring, and safe text rendering verified.');
+          NODE
