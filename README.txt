@@ -5,7 +5,8 @@ Main files:
 - content.js: central text, labels and navigation links for the home page.
 - style.css: shared visual design and layout used across all pages.
 - projects.html: personal projects collection.
-- designs.html: visual designs and creative work.
+- designs.html: selected public image gallery.
+- public-gallery.js: read-only client for the selected public image gallery.
 - articles.html: articles and insights.
 - README.txt: this guide.
 
@@ -33,7 +34,7 @@ PUBLIC POSTS INTEGRATION — PREVIEW ONLY
 - Post text is inserted as text, not executable HTML. Featured images are accepted only from the ImageKit HTTPS host.
 
 IMPORTANT:
-The current public-posts.js endpoint is the development Preview Worker:
+The current public-posts.js and public-gallery.js endpoints are the development Preview Worker:
 https://feature-admin-post-management-verified-yuri-issa-admin.yuri-issa37.workers.dev
 
-This is intentional for development. Do not merge this website integration into the live main branch until the production Worker API has been reviewed, deployed with the correct production database and ImageKit configuration, and the API endpoint in public-posts.js has been changed to the approved production Worker URL. Production website and production Worker must remain untouched during preview testing.
+This is intentional for development. Do not merge this website integration into the live main branch until the production Worker API has been reviewed, deployed with the correct production database and ImageKit configuration, and the API endpoint in public-posts.js has been changed to the approved production Worker URL. The gallery API returns only media records explicitly marked public; existing media defaults to hidden. Production website and production Worker must remain untouched during preview testing.
