@@ -46,7 +46,7 @@
     const meta = make("p", "public-content-meta", dateLabel(post.published_at));
     card.append(meta);
     const link = make("a", "view-all", "READ MORE");
-    link.href = API + "/posts/" + encodeURIComponent(post.id);
+    link.href = "article.html?id=" + encodeURIComponent(post.id);
     link.target = "_blank";
     link.rel = "noopener noreferrer";
     link.setAttribute("aria-label", "Read " + (post.title || "published post") + " as data");
@@ -119,11 +119,39 @@
     } catch (_) { /* Keep the existing gallery introduction visible. */ }
   }
 
+
+  async function loadArticlePage() {
+    const id = new URLSearchParams(location.search).get("id");
+    const host = document.querySelector("[data-public-article]");
+    if (!host || !id || !/^[A-Za-z0-9-]{16,64}$/.test(id)) return;
+    try {
+      const data = await get("/posts/" + encodeURIComponent(id));
+      const post = data.post;
+      if (!post) throw new Error("Unavailable");
+      document.title = (post.title || "YURI ISSA") + " — YURI ISSA";
+      host.replaceChildren(make("div", "kicker", post.type === "article" ? "PUBLISHED ARTICLE" : "PUBLISHED PROJECT"));
+      host.append(make("h1", "", post.title || ""));
+      if (post.image_url) {
+        const src = safeImage(post.image_url);
+        if (src) {
+          const image = make("img", "public-content-image");
+          image.src = src;
+          image.alt = post.image_alt || post.title || "";
+          host.append(image);
+        }
+      }
+      host.append(make("p", "public-content-meta", dateLabel(post.published_at)));
+      host.append(make("div", "public-article-body", post.body || post.summary || ""));
+    } catch (_) {
+      host.replaceChildren(make("p", "", "This published item is unavailable."));
+    }
+  }
+
   function addStyles() {
     if (document.getElementById("public-content-styles")) return;
     const style = make("style");
     style.id = "public-content-styles";
-    style.textContent = ".public-content-image{display:block;width:100%;max-height:230px;object-fit:cover;border-radius:10px;margin-top:14px}.public-content-meta{font-size:12px;opacity:.7;margin-top:12px}.public-gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:24px}.public-gallery-item{margin:0;min-width:0}.public-gallery-item img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px}.public-gallery-item figcaption{font-size:12px;opacity:.75;margin-top:7px}";
+    style.textContent = ".public-content-image{display:block;width:100%;max-height:230px;object-fit:cover;border-radius:10px;margin-top:14px}.public-content-meta{font-size:12px;opacity:.7;margin-top:12px}.public-article-body{white-space:pre-wrap;line-height:1.9;margin-top:24px;overflow-wrap:anywhere}.public-gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:24px}.public-gallery-item{margin:0;min-width:0}.public-gallery-item img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px}.public-gallery-item figcaption{font-size:12px;opacity:.75;margin-top:7px}";
     document.head.append(style);
   }
 
@@ -131,5 +159,5 @@
   loadProjects();
   loadArticles();
   loadProjectPage();
-  loadGallery();
+  loadGallery();\n  loadArticlePage();
 })();
