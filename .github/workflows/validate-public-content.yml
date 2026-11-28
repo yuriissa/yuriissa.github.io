@@ -1,0 +1,40 @@
+name: Validate public content integration
+
+on:
+  push:
+    branches: [feature/public-content-api-integration]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out website
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check public content script syntax
+        run: node --check public-content.js
+      - name: Verify safe API integration wiring
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const source = fs.readFileSync('public-content.js', 'utf8');
+          if (!source.includes('https://yuri-issa-admin.yuri-issa37.workers.dev')) throw new Error('Production API base URL is missing.');
+          if (!source.includes('url.hostname === "ik.imagekit.io"')) throw new Error('ImageKit URL allow-list is missing.');
+          if (!source.includes('credentials: "omit"') || !source.includes('method: "GET"')) throw new Error('Public API requests must remain read-only and omit credentials.');
+          if (source.includes('innerHTML')) throw new Error('Dynamic public content must not be inserted with innerHTML.');
+          for (const file of ['projects.html', 'articles.html', 'designs.html']) {
+            const html = fs.readFileSync(file, 'utf8');
+            const language = html.indexOf('<script src="language.js"></script>');
+            const content = html.indexOf('<script src="public-content.js"></script>');
+            if (language < 0 || content <= language) throw new Error(file + ' must load the language layer before the public content layer.');
+          }
+          console.log('Public content wiring, read-only requests, and safe rendering checks passed.');
+          NODE
