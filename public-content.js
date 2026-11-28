@@ -10,6 +10,7 @@
     : pageName === "articles.html" ? "articles"
     : pageName === "designs.html" ? "gallery" : "index";
   const root = document.querySelector(".page-content");
+  const homeFeed = document.querySelector("[data-public-feed=\"all\"]");
   const language = () => document.documentElement.lang === "ar" ? "ar" : "en";
   const words = {
     en: {
@@ -23,7 +24,8 @@
       article: "ARTICLE",
       back: "BACK TO THE COLLECTION",
       notFound: "This item is unavailable or is no longer published.",
-      error: "Content could not be loaded right now. Please try again later."
+      error: "Content could not be loaded right now. Please try again later.",
+      latestEmpty: "No published posts are available yet."
     },
     ar: {
       loading: "جارٍ تحميل المحتوى المنشور…",
@@ -36,7 +38,8 @@
       article: "مقال",
       back: "العودة إلى المجموعة",
       notFound: "هذا المحتوى غير متاح أو لم يعد منشورًا.",
-      error: "تعذّر تحميل المحتوى الآن. يرجى المحاولة لاحقًا."
+      error: "تعذّر تحميل المحتوى الآن. يرجى المحاولة لاحقًا.",
+      latestEmpty: "لا توجد منشورات منشورة حاليًا."
     }
   };
 
@@ -183,6 +186,30 @@
       statusNote(root, t("unavailable"));
     }
   }
+  async function renderHomeFeed(token) {
+    if (!homeFeed) return;
+    statusNote(homeFeed, t("loading"));
+    try {
+      const data = await getJson("/api/public/posts");
+      if (token !== renderToken) return;
+      const posts = (data.posts || []).filter(post =>
+        post && typeof post === "object" &&
+        typeof post.id === "string" && /^[a-f0-9-]{16,64}$/i.test(post.id) &&
+        (post.type === "article" || post.type === "project")
+      );
+      if (!posts.length) {
+        statusNote(homeFeed, t("latestEmpty"));
+        return;
+      }
+      const grid = el("div", "cards public-post-grid");
+      posts.slice(0, 6).forEach(post => grid.append(postCard(post, post.type)));
+      homeFeed.replaceChildren(grid);
+    } catch {
+      if (token !== renderToken) return;
+      statusNote(homeFeed, t("unavailable"));
+    }
+  }
+
   let renderToken = 0;
   async function render() {
     const token = ++renderToken;
@@ -190,9 +217,11 @@
       await renderPosts(page, token);
     } else if (page === "gallery") {
       await renderGallery(token);
+    } else if (page === "index") {
+      await renderHomeFeed(token);
     }
   }
-  if (root && page !== "index") {
+  if ((root && page !== "index") || homeFeed) {
     render();
     const observer = new MutationObserver(() => render());
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
