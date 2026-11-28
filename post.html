@@ -16,12 +16,20 @@
   <a class="brand" href="index.html" aria-label="Yuri Issa home">
     <span class="brand-name">YURI <span>ISSA.</span></span>
   </a>
-  <nav class="nav" aria-label="Post navigation">
+  <button class="menu-toggle" aria-label="Open navigation" onclick="document.querySelector('.nav').classList.toggle('open')">☰</button>
+  <nav class="nav" aria-label="Main navigation">
     <a href="index.html#home"><span class="nav-label">Home</span></a>
     <a href="projects.html"><span class="nav-label">Projects</span></a>
     <a href="index.html#archive"><span class="nav-label">Archive</span></a>
     <a href="designs.html"><span class="nav-label">Gallery</span></a>
     <a href="index.html#contact"><span class="nav-label">Contact</span></a>
+    <div class="lang-wrap">
+      <button class="lang" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Choose language"><span class="lang-current">EN</span><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="language-menu" hidden>
+        <button type="button" data-language="en" aria-pressed="true">EN <span>English</span></button>
+        <button type="button" data-language="ar" aria-pressed="false">AR <span>العربية</span></button>
+      </div>
+    </div>
   </nav>
 </header>
 <main class="public-post-detail-shell">
