@@ -85,6 +85,10 @@
       <a class="view-all" href="https://github.com/yuriissa/WorkTime-App" target="_blank" rel="noopener">VIEW PROJECT ↗</a>
     </article>
   </div>
+  <div class="public-feed-wrap">
+    <h2 class="public-feed-heading" data-public-feed-title="project">Published projects</h2>
+    <div data-public-feed="project" data-limit="100" aria-live="polite">Loading published projects…</div>
+  </div>
   <div class="page-note">More projects and experiments will be added to this collection over time.</div>
 </section>
 
@@ -111,5 +115,6 @@
 document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click',()=>document.querySelector('.nav').classList.remove('open')));
 </script>
 <script src="language.js"></script>
+<script src="public-posts.js"></script>
 </body>
 </html>
