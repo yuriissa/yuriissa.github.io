@@ -13,7 +13,7 @@
 </head>
 <body>
 <header class="site-header">
-  <a class="brand" href="https://yuri-issa-admin.yuri-issa37.workers.dev/" aria-label="Yuri Issa private administration">
+  <a class="brand" href="index.html#home" aria-label="Yuri Issa private administration">
     <!-- Top-left metallic 3D mini shield with Y and green dot -->
     <svg class="brand-mark" viewBox="0 0 120 138" aria-hidden="true">
       <defs>
@@ -78,7 +78,10 @@
   <p>A collection of digital projects, practical tools and creative experiments.</p>
 </section>
 <section class="page-content">
-  <div class="cards"></div>
+  <div class="public-feed-wrap">
+    <h2 class="public-feed-heading" data-public-feed-title="project">Published projects</h2>
+    <div data-public-feed="project" data-limit="100" aria-live="polite">Loading published projects…</div>
+  </div>
   <div class="page-note">More projects and experiments will be added to this collection over time.</div>
 </section>
 
@@ -105,5 +108,6 @@
 document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click',()=>document.querySelector('.nav').classList.remove('open')));
 </script>
 <script src="language.js"></script>
+<script src="public-posts.js"></script>
 </body>
 </html>

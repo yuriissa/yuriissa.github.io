@@ -13,7 +13,7 @@
 </head>
 <body>
 <header class="site-header">
-  <a class="brand" href="https://yuri-issa-admin.yuri-issa37.workers.dev/" aria-label="Yuri Issa private administration">
+  <a class="brand" href="index.html#home" aria-label="Yuri Issa private administration">
     <!-- Top-left metallic 3D mini shield with Y and green dot -->
     <svg class="brand-mark" viewBox="0 0 120 138" aria-hidden="true">
       <defs>
@@ -78,7 +78,8 @@
   <p>Thoughts, knowledge, useful discoveries and ideas worth sharing.</p>
 </section>
 <section class="page-content">
-  <div class="page-note">The reading collection will grow gradually, with each article presented in its own reading view.</div>
+  <h2 class="public-feed-heading" data-public-feed-title="article">Published articles</h2>
+  <div data-public-feed="article" data-limit="100" aria-live="polite">Loading published articles…</div>
 </section>
 
 </main>
@@ -104,5 +105,6 @@
 document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click',()=>document.querySelector('.nav').classList.remove('open')));
 </script>
 <script src="language.js"></script>
+<script src="public-posts.js"></script>
 </body>
 </html>
