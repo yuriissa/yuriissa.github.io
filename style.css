@@ -860,6 +860,8 @@ body.wechat-modal-open{overflow:hidden}
 
 
 /* Public content rendered from the read-only publishing API */
+.latest-post-links{display:flex;flex-wrap:wrap;align-items:center;gap:18px;margin-top:16px}
+.latest-post-links .view-all{padding:4px 0}
 .public-post-grid{align-items:stretch}
 .public-post-card{display:flex;flex-direction:column;gap:8px;min-height:100%}
 .public-post-image{width:100%;max-height:230px;aspect-ratio:16/9;object-fit:cover;border-radius:9px;border:1px solid #263441;background:#03070b}
