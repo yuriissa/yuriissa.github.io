@@ -21,8 +21,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Check public posts JavaScript syntax
-        run: node --check public-posts.js
+      - name: Check public JavaScript syntax
+        run: |
+          node --check public-posts.js
+          node --check public-gallery.js
       - name: Verify integration wiring and read-only boundary
         run: |
           node <<'NODE'
