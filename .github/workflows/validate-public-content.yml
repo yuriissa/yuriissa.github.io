@@ -2,9 +2,9 @@ name: Validate public content integration
 
 on:
   push:
-    branches: [feature/public-content-api-integration]
+    branches: [feature/public-content-api-integration, feature/public-content-preview-switch]
   pull_request:
-    branches: [main]
+    branches: [main, feature/public-content-api-integration]
 
 permissions:
   contents: read
@@ -27,6 +27,10 @@ jobs:
           const fs = require('node:fs');
           const source = fs.readFileSync('public-content.js', 'utf8');
           if (!source.includes('https://yuri-issa-admin.yuri-issa37.workers.dev')) throw new Error('Production API base URL is missing.');
+          if (!source.includes('https://feature-admin-post-management-verified-yuri-issa-admin.yuri-issa37.workers.dev')) throw new Error('Preview API base URL is missing.');
+          if (!source.includes('get("preview") === "1"')) throw new Error('Preview mode must require an explicit query parameter.');
+          if (!source.includes('&preview=1')) throw new Error('Article navigation must preserve Preview mode.');
+          if (!source.includes('?preview=1')) throw new Error('Back navigation must preserve Preview mode.');
           if (!source.includes('url.hostname === "ik.imagekit.io"')) throw new Error('ImageKit URL allow-list is missing.');
           if (!source.includes('credentials: "omit"') || !source.includes('method: "GET"')) throw new Error('Public API requests must remain read-only and omit credentials.');
           if (source.includes('innerHTML')) throw new Error('Dynamic public content must not be inserted with innerHTML.');
