@@ -4,7 +4,13 @@
 (() => {
   "use strict";
 
-  const API_BASE = "https://yuri-issa-admin.yuri-issa37.workers.dev";
+  const API_BASES = {
+    production: "https://yuri-issa-admin.yuri-issa37.workers.dev",
+    preview: "https://feature-admin-post-management-verified-yuri-issa-admin.yuri-issa37.workers.dev"
+  };
+  const API_BASE = new URLSearchParams(location.search).get("preview") === "1"
+    ? API_BASES.preview
+    : API_BASES.production;
   const pageName = location.pathname.split("/").pop() || "index.html";
   const page = pageName === "projects.html" ? "projects"
     : pageName === "articles.html" ? "articles"
