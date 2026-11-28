@@ -63,7 +63,16 @@
       const data = await get("/posts");
       const projects = (data.posts || []).filter(post => post.type === "project");
       if (!projects.length) return;
-      host.replaceChildren(...projects.map(postCard));
+      // Preserve the site's existing hand-authored project cards and add
+      // published admin projects without duplicating matching titles.
+      const existingTitles = new Set(
+        [...host.querySelectorAll(".info-card h3")]
+          .map(node => node.textContent.trim().toLocaleLowerCase())
+      );
+      const additions = projects.filter(post =>
+        !existingTitles.has(String(post.title || "").trim().toLocaleLowerCase())
+      );
+      host.append(...additions.map(postCard));
     } catch (_) { /* Keep the existing static site content as a graceful fallback. */ }
   }
 
