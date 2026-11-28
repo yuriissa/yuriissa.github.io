@@ -137,6 +137,7 @@
   }
 
   function renderDetail(container, post) {
+    document.title = (post.title || text("منشور", "Post")) + " — YURI ISSA";
     container.replaceChildren();
     var article = make("article", "public-post-detail");
     article.dir = isArabic() ? "rtl" : "ltr";
