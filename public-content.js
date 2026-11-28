@@ -134,20 +134,20 @@
       return;
     }
     const grid = root.querySelector(".cards") || el("div", "cards public-post-grid");
-    if (!grid.isConnected) root.prepend(grid);
-    statusNote(root, t("loading"));
+    const loadingNote = el("div", "page-note", t("loading"));
+    root.replaceChildren(loadingNote, grid);
     try {
       const data = await getJson("/api/public/posts");
       if (token !== renderToken) return;
       const posts = (data.posts || []).filter(post => post.type === type);
       grid.replaceChildren();
       if (!posts.length) {
-        statusNote(root, t(kind === "projects" ? "emptyProjects" : "emptyArticles"));
+        grid.remove();
+        loadingNote.textContent = t(kind === "projects" ? "emptyProjects" : "emptyArticles");
         return;
       }
       posts.forEach(post => grid.append(postCard(post, type)));
-      const note = root.querySelector(".page-note");
-      if (note) note.remove();
+      loadingNote.remove();
     } catch {
       if (token !== renderToken) return;
       statusNote(root, t("unavailable"));
