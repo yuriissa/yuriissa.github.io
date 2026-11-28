@@ -193,6 +193,11 @@
   </div>
 </section>
 
+<section class="public-feed-section" aria-labelledby="latestPostsHeading">
+  <h2 class="public-feed-heading" id="latestPostsHeading" data-public-feed-title="all">Latest posts</h2>
+  <div data-public-feed="all" data-limit="6" aria-live="polite">Loading published posts…</div>
+</section>
+
 <section class="content-section" id="about">
   <div class="kicker">01 / ABOUT</div>
   <h2>A little about me</h2>
@@ -435,5 +440,6 @@ document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click',()=>do
 
 <script src="content.js"></script>
 <script src="language.js"></script>
+<script src="public-posts.js"></script>
 </body>
 </html>
