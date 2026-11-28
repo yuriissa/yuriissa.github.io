@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: 22
       - name: Check public content script syntax
-        run: node --check public-content.js
+        run: node --check public-content.js && node --check language.js
       - name: Verify safe API integration wiring
         run: |
           node <<'NODE'
