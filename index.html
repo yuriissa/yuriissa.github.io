@@ -435,5 +435,20 @@ document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click',()=>do
 
 <script src="content.js"></script>
 <script src="language.js"></script>
+
+<script>
+/* Keep the isolated visual-preview flag while navigating between site pages. */
+(() => {
+  if (new URLSearchParams(location.search).get("preview") !== "1") return;
+  document.querySelectorAll('a[href]').forEach(link => {
+    try {
+      const target = new URL(link.getAttribute("href"), location.href);
+      if (target.origin !== location.origin) return;
+      target.searchParams.set("preview", "1");
+      link.href = target.pathname + target.search + target.hash;
+    } catch (error) {}
+  });
+})();
+</script>
 </body>
 </html>
