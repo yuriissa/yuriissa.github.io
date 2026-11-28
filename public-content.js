@@ -159,7 +159,7 @@
     try {
       const data = await getJson("/api/public/gallery");
       if (token !== renderToken) return;
-      const images = data.images || data.media || [];
+      const images = (data.images || data.media || []).filter(item => safeImageUrl(item.image_url));
       if (!images.length) {
         statusNote(root, t("emptyGallery"));
         return;
@@ -167,7 +167,6 @@
       const grid = el("div", "public-gallery-grid");
       images.forEach(item => {
         const imageUrl = safeImageUrl(item.image_url);
-        if (!imageUrl) return;
         const figure = el("figure", "public-gallery-item");
         const image = el("img", "", item.alt_text || item.filename || "");
         image.src = imageUrl;
