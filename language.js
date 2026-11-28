@@ -49,7 +49,11 @@
       ".contact-links .contact-link:nth-child(1)":"فيسبوك",
       ".contact-links .contact-link:nth-child(2)":"واتساب",
       ".contact-links .contact-link:nth-child(3)":"تيليغرام",
-      ".contact-links .contact-link:nth-child(4)":"وي تشات"
+      ".contact-links .contact-link:nth-child(4)":"وي تشات",
+      "#latest-posts .kicker":"06 / أحدث المنشورات",
+      "#latest-posts h2":"أحدث المنشورات",
+      "#latest-posts .view-all:first-of-type":"عرض المقالات",
+      "#latest-posts .view-all:last-of-type":"عرض المشاريع"
     },
     projects: {
       ".page-intro .kicker":"02 / المشاريع",
