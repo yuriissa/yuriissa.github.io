@@ -49,7 +49,7 @@ jobs:
           if (script.includes('innerHTML')) throw new Error('User content must not be inserted with innerHTML');
           if (!script.includes('ik.imagekit.io')) throw new Error('Image host allowlist is missing');
           if (!gallery.includes('/api/public/gallery')) throw new Error('Public gallery API endpoint is missing');
-          if (/method\\s*:\\s*[\"'](?:POST|PUT|PATCH|DELETE)[\"']/i.test(gallery)) throw new Error('Public gallery client must remain read-only');
+          if (/method\s*:\s*["'](?:POST|PUT|PATCH|DELETE)["']/i.test(gallery)) throw new Error('Public gallery client must remain read-only');
           if (gallery.includes('innerHTML')) throw new Error('Gallery content must not be inserted with innerHTML');
           if (!gallery.includes('ik.imagekit.io')) throw new Error('Gallery image host allowlist is missing');
           console.log('Public pages, read-only API wiring, and safe text rendering verified.');
