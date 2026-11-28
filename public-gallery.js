@@ -59,7 +59,13 @@
     }
     container.appendChild(grid);
   }
+  function updateHeading() {
+    document.querySelectorAll("[data-gallery-title]").forEach(function (heading) {
+      heading.textContent = text("المعرض المختار", "Selected works");
+    });
+  }
   function load() {
+    updateHeading();
     var containers = Array.prototype.slice.call(document.querySelectorAll("[data-public-gallery]"));
     if (!containers.length) return;
     containers.forEach(function (container) {
