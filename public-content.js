@@ -103,9 +103,9 @@
     article.append(el("h2", "public-detail-title", post.title || ""));
     const date = dateText(post.published_at);
     if (date) article.append(el("p", "public-post-date", date));
-    if (post.image_url) {
+    if (safeImageUrl(post.image_url)) {
       const image = el("img", "public-detail-image");
-      image.src = post.image_url;
+      image.src = safeImageUrl(post.image_url);
       image.alt = post.image_alt || post.title || "";
       image.loading = "eager";
       image.decoding = "async";
@@ -161,7 +161,8 @@
       }
       const grid = el("div", "public-gallery-grid");
       images.forEach(item => {
-        const imageUrl = safeImageUrl(item.image_url);\n        if (!imageUrl) return;
+        const imageUrl = safeImageUrl(item.image_url);
+        if (!imageUrl) return;
         const figure = el("figure", "public-gallery-item");
         const image = el("img", "", item.alt_text || item.filename || "");
         image.src = imageUrl;
