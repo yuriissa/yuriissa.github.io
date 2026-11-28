@@ -115,7 +115,7 @@
     article.append(el("div", "public-detail-body", post.body || ""));
     container.append(article);
   }
-  async function renderPosts(kind) {
+  async function renderPosts(kind, token) {
     if (!root) return;
     const type = kind === "projects" ? "project" : "article";
     const params = new URLSearchParams(location.search);
@@ -124,9 +124,11 @@
       statusNote(root, t("loading"));
       try {
         const data = await getJson("/api/public/posts/" + encodeURIComponent(postId));
+        if (token !== renderToken) return;
         if (!data.post || data.post.type !== type) throw new Error("not-found");
         detailView(root, data.post, type);
       } catch {
+        if (token !== renderToken) return;
         statusNote(root, t("notFound"));
       }
       return;
@@ -136,6 +138,7 @@
     statusNote(root, t("loading"));
     try {
       const data = await getJson("/api/public/posts");
+      if (token !== renderToken) return;
       const posts = (data.posts || []).filter(post => post.type === type);
       grid.replaceChildren();
       if (!posts.length) {
@@ -146,14 +149,16 @@
       const note = root.querySelector(".page-note");
       if (note) note.remove();
     } catch {
+      if (token !== renderToken) return;
       statusNote(root, t("unavailable"));
     }
   }
-  async function renderGallery() {
+  async function renderGallery(token) {
     if (!root) return;
     statusNote(root, t("loading"));
     try {
       const data = await getJson("/api/public/gallery");
+      if (token !== renderToken) return;
       const images = data.images || data.media || [];
       if (!images.length) {
         statusNote(root, t("emptyGallery"));
@@ -175,6 +180,7 @@
       });
       root.replaceChildren(grid);
     } catch {
+      if (token !== renderToken) return;
       statusNote(root, t("unavailable"));
     }
   }
@@ -182,11 +188,10 @@
   async function render() {
     const token = ++renderToken;
     if (page === "projects" || page === "articles") {
-      await renderPosts(page);
+      await renderPosts(page, token);
     } else if (page === "gallery") {
-      await renderGallery();
+      await renderGallery(token);
     }
-    if (token !== renderToken) return;
   }
   if (root && page !== "index") {
     render();
